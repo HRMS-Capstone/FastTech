@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 04:37 AM
+-- Generation Time: Dec 05, 2024 at 03:51 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -70,13 +70,12 @@ CREATE TABLE `employees` (
 INSERT INTO `employees` (`id`, `first_name`, `last_name`, `email`, `job_title`) VALUES
 (1, 'Alexandra Janine', 'Torno', 'alextorno@gmail.com', 'Programmer Eme'),
 (2, 'Careenmay', 'Melendrez', 'careenmelendrez@gmail.com', 'UI Designer'),
-(3, 'Mika Ella', 'Castro', 'mikacastro@gmail.com', 'Technical Writer'),
+(3, 'Mika Ella', 'Castro', 'mikacastro@gmail.com', 'Technical Writer/ System Analyst'),
 (4, 'Archie', 'Pereye', 'archiepereye@gmail.com', 'Project Manager'),
 (17, 'Skyler', 'Lee', 'sky@gmail.com', 'Client'),
 (18, 'Trisha Mae', 'Alaba', 'alaba@gmail.com', 'Client'),
 (19, 'Kristine', 'Tihida', 'kristine@gmail.com', 'HR'),
-(20, 'Uno', 'Dos', 'uno@gmail.com', 'Client'),
-(21, 'robin', 'almarez', 'robin@gmail.com', 'client');
+(21, 'Robin', 'almarez', 'robin@gmail.com', 'client');
 
 -- --------------------------------------------------------
 
@@ -118,6 +117,29 @@ INSERT INTO `payroll` (`id`, `employee_id`, `amount`, `pay_date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `recruitment`
+--
+
+CREATE TABLE `recruitment` (
+  `id` int(11) NOT NULL,
+  `cfname` varchar(100) NOT NULL,
+  `clname` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `status` enum('Applied','Interviewed','Hired','Rejected') NOT NULL,
+  `date_applied` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `recruitment`
+--
+
+INSERT INTO `recruitment` (`id`, `cfname`, `clname`, `email`, `status`, `date_applied`) VALUES
+(1, 'Trisha Mae', 'Alaba', 'alaba@gmail.com', 'Applied', '2024-12-01'),
+(2, 'Trisha Mae', 'Alaba', 'alaba@gmail.com', 'Applied', '2024-12-01');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -126,21 +148,23 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `role` enum('admin','user') NOT NULL DEFAULT 'user'
+  `role` enum('admin','user') NOT NULL DEFAULT 'user',
+  `reset_token` varchar(255) DEFAULT NULL,
+  `token_expiry` datetime DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `role`) VALUES
-(1, 'admin', '$2y$10$4vCPxPxpW4OmWO.5AlX/.uAss6lVnu03D8WV8KrACcfgA14Szvqsm', '2024-10-31 03:08:43', 'user'),
-(4, 'sensei', '$2y$10$jv2je.E1K5/0H/XUoXRVje3J4je1XKVKVXbfk1gKEbI6elvJEuG/W', '2024-10-31 03:26:18', 'user'),
-(8, 'adminalex', '$2y$10$Ij9zgWGZ/.IoIUIclomC8.5tpm2tiMMfG6mhcDzuzmSRtv.NKjJJe', '2024-10-31 06:16:50', 'user'),
-(9, 'Alex', '$2y$10$TPR.cgBFNjcakqxADfA.PeXmTXPpaiP886ggoT94l3Jgl4XvCrMZe', '2024-10-31 06:29:46', 'admin'),
-(10, 'Kristine', '$2y$10$xXoQnGrt83OYDSu/upzkGe//slMb8WoHHCOKZ.Po8yozrs91TfI5W', '2024-11-12 01:04:19', 'admin'),
-(11, 'KristineHr', '$2y$10$OT4kneO.n/6XE2FbJD5v5Ou8vYhvbVgngZp9VhWY4F3aB.wBT2BHy', '2024-11-12 02:24:41', 'admin'),
-(12, 'gavriella', '$2y$10$KeBRio1Kpi31J5W7k61Ozuts6ttvOlwTvNARqACEOk5IJCRz2/UOa', '2024-11-12 06:49:54', 'user');
+INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `role`, `reset_token`, `token_expiry`, `email`, `firstname`, `lastname`) VALUES
+(11, 'KristineHr', '$2y$10$OT4kneO.n/6XE2FbJD5v5Ou8vYhvbVgngZp9VhWY4F3aB.wBT2BHy', '2024-11-12 02:24:41', 'admin', NULL, NULL, '', '', ''),
+(20, 'Sensei', '$2y$10$.peNIEkVYAeWiAIVk6xxHeppK9J68FxK.jts/q2eNsnma.NmB9xpO', '2024-12-01 06:21:03', '', NULL, NULL, 'tornoalexandra9@gmail.com', 'Alexandra', 'Torno'),
+(27, 'Alex', '$2y$10$Cw8Do6jYjfE9cTfgeLRKneKUkk1X8jbFmIEMU9INcUZ7KntIOLiCK', '2024-12-05 04:43:55', '', NULL, NULL, 'tornoalexandra9@gmail.com', 'Alexandra Janine', 'Torno'),
+(28, 'Alex05', '$2y$10$BYuI7mI3Wa00fgMe6fRFMuVyEQakRTHx2KUS6ozVRueP1QQ/MDhWe', '2024-12-05 04:44:42', '', NULL, NULL, 'tornoalexandra9@gmail.com', 'Alexandra ', 'Torno');
 
 --
 -- Indexes for dumped tables
@@ -171,6 +195,12 @@ ALTER TABLE `job_openings`
 ALTER TABLE `payroll`
   ADD PRIMARY KEY (`id`),
   ADD KEY `payroll_ibfk_1` (`employee_id`);
+
+--
+-- Indexes for table `recruitment`
+--
+ALTER TABLE `recruitment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -208,10 +238,16 @@ ALTER TABLE `payroll`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `recruitment`
+--
+ALTER TABLE `recruitment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
